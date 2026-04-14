@@ -1,5 +1,5 @@
 {
-  "name": "llm-skills-kit",
+  "name": "smarter-agents",
   "version": "1.0.0",
   "description": "9 research-backed skills that reduce token cost and improve output quality. Tier 1 (build-time): positive, context-trim, toolsmith. Tier 2 (always-on): forge, contract, checkpoint. Tier 3 (conditional): contrarian, anchor-point, grounding.",
   "author": {

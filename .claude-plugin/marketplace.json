@@ -1,5 +1,5 @@
 {
-  "name": "llm-skills-kit",
+  "name": "smarter-agents",
   "description": "Research-backed system prompt skills that reduce token cost and improve output quality for AI coding assistants.",
   "owner": {
     "name": "Dylan",
@@ -7,7 +7,7 @@
   },
   "plugins": [
     {
-      "name": "llm-skills-kit",
+      "name": "smarter-agents",
       "description": "All 9 skills: positive, context-trim, toolsmith, forge, contract, checkpoint, contrarian, anchor-point, grounding. Tier 1 runs once (zero cost), Tier 2 is always-on (~935 tokens), Tier 3 is opt-in.",
       "source": "./",
       "category": "productivity",

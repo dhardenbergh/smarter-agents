@@ -1,5 +1,5 @@
 {
-  "name": "llm-skills-kit",
+  "name": "smarter-agents",
   "description": "9 research-backed skills that reduce token cost and improve output quality. Drop-in system prompt optimizations for any AI coding assistant.",
   "version": "1.0.0",
   "contextFileName": "GEMINI.md"

@@ -1,53 +1,74 @@
 # Installation Guide
 
-This guide covers installing individual skills, installing the full kit, and integrating skills into your configuration. The recommended approach is tier-by-tier, starting with the build-time tools that have zero ongoing cost.
+Install skills with a single command using [`npx skills add`](https://github.com/webrix-ai/add-skills), or copy files manually. Skills work with 36+ AI coding agents.
 
 ---
 
-## Prerequisites
-
-Skills are plain text files that reference themselves in your AI assistant's system prompt or configuration file. They work with any tool that supports a CLAUDE.md, `.cursorrules`, or similar system prompt file.
-
-**Supported tools:**
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (via CLAUDE.md)
-- [Cursor](https://www.cursor.com/) (via `.cursorrules`)
-- Any MCP-compatible tool (via system prompt reference)
-- Any tool accepting a custom system prompt
-
-**Requirements:**
-- A working installation of Claude Code, Cursor, or similar
-- Write access to your config directory (`~/.claude/` for Claude Code)
-- Git (optional, for cloning the repository)
-
----
-
-## Installing Individual Skills
-
-### Step 1: Copy the skill file to your skills directory
+## Quick Install (Recommended)
 
 ```bash
-# Create the skills directory if it doesn't exist
+# Install all 9 skills for your agent
+npx skills add dhardenbergh/smarter-agents
+
+# Install for a specific agent
+npx skills add dhardenbergh/smarter-agents -a claude-code
+npx skills add dhardenbergh/smarter-agents -a cursor
+npx skills add dhardenbergh/smarter-agents -a codex
+npx skills add dhardenbergh/smarter-agents -a windsurf
+npx skills add dhardenbergh/smarter-agents -a github-copilot
+npx skills add dhardenbergh/smarter-agents -a cline
+npx skills add dhardenbergh/smarter-agents -a amp
+```
+
+### Install specific skills only
+
+```bash
+# Tier 1 — build-time tools (zero runtime cost)
+npx skills add dhardenbergh/smarter-agents -s positive context-trim toolsmith
+
+# Tier 2 — always-on runtime skills
+npx skills add dhardenbergh/smarter-agents -s forge contract checkpoint
+
+# Single skill
+npx skills add dhardenbergh/smarter-agents -s contrarian
+```
+
+### Flags
+
+| Flag | Effect |
+|------|--------|
+| `-a <agent>` | Target a specific agent (claude-code, cursor, codex, windsurf, etc.) |
+| `-s <name>` | Install specific skill(s) by name |
+| `-y` | Skip confirmation prompts |
+| `-g` | Install globally (all projects) |
+| `--list` | Preview available skills without installing |
+
+---
+
+## Manual Install (Claude Code)
+
+```bash
+git clone https://github.com/dhardenbergh/smarter-agents.git
+cd smarter-agents
 mkdir -p ~/.claude/skills
 
-# Copy a specific skill
+# Tier 1 — build-time, zero runtime cost
 cp skills/positive/SKILL.md ~/.claude/skills/positive.md
 cp skills/context-trim/SKILL.md ~/.claude/skills/context-trim.md
 cp skills/toolsmith/SKILL.md ~/.claude/skills/toolsmith.md
 
-# Tier 2 skills
+# Tier 2 — always-on, ~935 tokens
 cp skills/forge/SKILL.md ~/.claude/skills/forge.md
 cp skills/contract/SKILL.md ~/.claude/skills/contract.md
 cp skills/checkpoint/SKILL.md ~/.claude/skills/checkpoint.md
 
-# Tier 3 skills
+# Tier 3 — conditional, opt-in
 cp skills/contrarian/SKILL.md ~/.claude/skills/contrarian.md
 cp skills/anchor-point/SKILL.md ~/.claude/skills/anchor-point.md
 cp skills/grounding/SKILL.md ~/.claude/skills/grounding.md
 ```
 
-### Step 2: Reference the skill in your CLAUDE.md
-
-Open `~/.claude/CLAUDE.md` (create it if it doesn't exist) and add a reference to each skill you installed:
+Then reference in your CLAUDE.md:
 
 ```markdown
 @skills/positive.md
@@ -55,64 +76,48 @@ Open `~/.claude/CLAUDE.md` (create it if it doesn't exist) and add a reference t
 @skills/forge.md
 ```
 
-The `@` prefix tells Claude Code to load the referenced file as part of the system context.
-
-For Cursor, add references to your `.cursorrules` file in the same format, or paste the SKILL.md content directly into the file.
-
 ---
 
-## Installing All Skills
+## Platform-Specific Notes
+
+### Claude Code Plugin
+
+If you use the Claude Code plugin system:
 
 ```bash
-# Clone the repository
-git clone https://github.com/your-org/llm-skills-kit.git
-cd llm-skills-kit
-
-# Create the skills directory
-mkdir -p ~/.claude/skills
-
-# Install all skills at once
-for skill_file in skills/tier*/*/SKILL.md; do
-    skill_name=$(basename $(dirname "$skill_file"))
-    cp "$skill_file" ~/.claude/skills/"$skill_name".md
-    echo "Installed: $skill_name"
-done
+claude plugin marketplace add dhardenbergh/smarter-agents
+claude plugin install smarter-agents@smarter-agents
 ```
 
-Then add references to your CLAUDE.md:
+### Codex
+
+The repo includes an `AGENTS.md` file. Codex loads it automatically when the repo is cloned or referenced.
+
+### Gemini CLI
 
 ```bash
-# Append all skill references to CLAUDE.md
-for skill_file in ~/.claude/skills/*.md; do
-    skill_name=$(basename "$skill_file")
-    echo "@skills/$skill_name" >> ~/.claude/CLAUDE.md
-done
+gemini extensions install https://github.com/dhardenbergh/smarter-agents
 ```
+
+### Cursor / Windsurf / Others
+
+Use the `npx skills add` command with the appropriate `-a` flag (see Quick Install above). The CLI handles path detection automatically for each agent.
 
 ---
 
 ## Recommended Setup: Tier by Tier
 
-Don't install everything at once. Start with the build-time tools, verify the improvements, then add runtime skills as needed.
+Start with the build-time tools, verify the improvements, then add runtime skills as needed.
 
 ### Phase 1: Build-Time Tools (Start Here)
 
-These run once and cost nothing at runtime. Install and run before adding any runtime skills.
+These run once and cost nothing at runtime. Install, run the commands, then remove the skill references.
 
 ```bash
-cp skills/positive/SKILL.md ~/.claude/skills/positive.md
-cp skills/context-trim/SKILL.md ~/.claude/skills/context-trim.md
-cp skills/toolsmith/SKILL.md ~/.claude/skills/toolsmith.md
+npx skills add dhardenbergh/smarter-agents -s positive context-trim toolsmith
 ```
 
-Add to CLAUDE.md:
-```
-@skills/positive.md
-@skills/context-trim.md
-@skills/toolsmith.md
-```
-
-Then run the optimization commands:
+Run the optimization commands:
 
 ```
 /positive:rewrite        # Rewrites negative constraints in CLAUDE.md
@@ -122,121 +127,96 @@ Then run the optimization commands:
 /toolsmith:optimize      # Rewrites tool descriptions in SHARP format
 ```
 
-After running these, **remove the skill references from CLAUDE.md**. The build-time tools have done their job — they don't need to load every session.
+After running these, remove the Tier 1 skill references from CLAUDE.md — they've done their job.
 
 ### Phase 2: Runtime Skills (Tier 2)
 
-These load every session. Combined overhead: ~500–700 tokens, cached after the first turn.
+Combined overhead: ~935 tokens, cached after the first turn.
 
 ```bash
-cp skills/forge/SKILL.md ~/.claude/skills/forge.md
-cp skills/contract/SKILL.md ~/.claude/skills/contract.md
-cp skills/checkpoint/SKILL.md ~/.claude/skills/checkpoint.md
-```
-
-Add to CLAUDE.md (after removing build-time tool references):
-```
-@skills/forge.md
-@skills/contract.md
-@skills/checkpoint.md
+npx skills add dhardenbergh/smarter-agents -s forge contract checkpoint
 ```
 
 **Guidance:**
 - Start with `forge` if you write production code
-- Add `contract` if you frequently find yourself re-prompting with "that's not what I meant"
-- Add `checkpoint` only if you run agentic workflows (Agent Teams, extended autonomous sessions)
+- Add `contract` if you frequently re-prompt with "that's not what I meant"
+- Add `checkpoint` only if you run agentic workflows (extended autonomous sessions)
 
 ### Phase 3: Conditional Skills (Tier 3)
 
-Add these only when your workflow matches the use case:
+Add only when your workflow matches:
 
 | Skill | Add when | Skip when |
 |-------|----------|-----------|
-| **contrarian** | You work solo with no code reviewer; you make architecture decisions with LLM input | You have a team reviewing your work |
-| **anchor-point** | Sessions regularly exceed 10 turns; you've noticed quality degrading mid-conversation | You use `/clear` frequently; most sessions are under 5 turns |
-| **grounding** | Research, documentation, compliance, or any factual task where a wrong claim has consequences | Pure code generation sessions |
+| **contrarian** | You work solo with no code reviewer | You have a team reviewing your work |
+| **anchor-point** | Sessions regularly exceed 10 turns | You use `/clear` frequently |
+| **grounding** | Factual tasks where a wrong claim has consequences | Pure code generation sessions |
 
 ```bash
-# Install only the ones you need
-cp skills/contrarian/SKILL.md ~/.claude/skills/contrarian.md
-cp skills/anchor-point/SKILL.md ~/.claude/skills/anchor-point.md
-cp skills/grounding/SKILL.md ~/.claude/skills/grounding.md
+npx skills add dhardenbergh/smarter-agents -s contrarian anchor-point grounding
 ```
 
 ---
 
 ## Disabling Skills Mid-Session
 
-All runtime skills support slash commands to disable them without restarting:
+All runtime skills support slash commands to toggle them without restarting:
 
-| Skill | Disable command | Re-enable |
-|-------|----------------|-----------|
-| forge | `/forge:off` | Restart session or clear context |
-| contract | `/contract:off` | `/contract:always` to force on |
+| Skill | Disable | Re-enable |
+|-------|---------|-----------|
+| forge | `/forge:off` | Restart session |
+| contract | `/contract:off` | `/contract:always` |
 | checkpoint | `/checkpoint:off` | Restart session |
 | contrarian | `/contrarian:off` | Restart session |
-| anchor-point | `/anchor:off` | `/anchor:now` for manual trigger |
+| anchor-point | `/anchor:off` | `/anchor:now` |
 | grounding | `/grounding:off` | Restart session |
-
-Use these when a skill's behavior is unhelpful for a specific task:
-
-```
-# Turning off contrarian for a creative brainstorming session
-/contrarian:off
-
-# Forcing a manual state checkpoint at any time
-/anchor:now
-
-# Forcing contract statements on even simple tasks
-/contract:always
-```
 
 ---
 
 ## Verifying Installation
 
-After installing and adding references to CLAUDE.md, start a new Claude Code session and verify:
+Start a new session and ask:
 
 ```
 What skills are currently loaded?
 ```
 
-Claude should list the loaded skills. If it doesn't recognize them, check that:
+If skills aren't recognized, check:
 
-1. The skill files are in `~/.claude/skills/`
-2. The CLAUDE.md references use the correct format: `@skills/skill-name.md`
-3. You're running a fresh session (not resuming an old context)
+1. Skill files exist in the correct directory for your agent
+2. References use the correct format (e.g., `@skills/skill-name.md` for Claude Code)
+3. You started a fresh session after adding references
 
 ---
 
-## Project-Level vs. Global Installation
+## Global vs. Project-Level
 
-Skills can be installed globally (applying to all projects) or per-project.
+**Global** (recommended for always-on skills):
+```bash
+npx skills add dhardenbergh/smarter-agents -g
+```
+Skills install to your global config directory and apply to all projects.
 
-**Global installation** (recommended for always-on skills):
-- Skill files in `~/.claude/skills/`
-- References in `~/.claude/CLAUDE.md`
-
-**Per-project installation** (for project-specific skills or testing):
-- Skill files in `.claude/skills/` within the project directory
-- References in `CLAUDE.md` at the project root
-
-Project-level CLAUDE.md is merged with global CLAUDE.md, so project-level skills layer on top of your global setup.
+**Per-project** (for testing or project-specific setups):
+```bash
+npx skills add dhardenbergh/smarter-agents
+```
+Skills install to the current project directory. Project-level skills layer on top of global ones.
 
 ---
 
 ## Troubleshooting
 
 **Skill not activating:**
-- Verify the file path matches the reference in CLAUDE.md
-- Check for typos in the `@skills/` reference
-- Ensure the session was restarted after adding the reference
+- Verify the file path matches the reference in your config
+- Restart the session after adding references
+- Check for typos in the `@skills/` path
 
 **Token usage seems high:**
-- Run `trim:audit` on your CLAUDE.md to check for other token-heavy content
-- Confirm prompt caching is active (static content before dynamic content in CLAUDE.md)
-- Consider whether you need all three Tier 3 skills simultaneously
+- Run `/trim:audit` on your CLAUDE.md to check for bloat
+- Confirm prompt caching is active (static content before dynamic content)
+- Consider whether you need all Tier 3 skills simultaneously
 
 **Conflicting behaviors:**
-- `contrarian` and `grounding` together can make responses verbose; load one or the other depending on whether your session is about decisions or facts
-- `contract` + `forge` + `checkpoint` together represent the maximum always-on stack; use all three only if you're running production-grade agentic workflows
+- `contrarian` + `grounding` together can make responses verbose — pick one per session
+- `contract` + `forge` + `checkpoint` is the maximum always-on stack — use all three only for production-grade agentic workflows

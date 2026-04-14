@@ -14,41 +14,41 @@ Pick your agent. One command. Done.
 
 | Agent | Install |
 |-------|---------|
-| **Any agent** | `npx skills add dhardenbergh/llm-skills-kit` |
-| **Claude Code** | `claude plugin marketplace add dhardenbergh/llm-skills-kit && claude plugin install llm-skills-kit@llm-skills-kit` |
-| **Codex** | `npx skills add dhardenbergh/llm-skills-kit -a codex` |
-| **Gemini CLI** | `gemini extensions install https://github.com/dhardenbergh/llm-skills-kit` |
-| **Cursor** | `npx skills add dhardenbergh/llm-skills-kit -a cursor` |
-| **Windsurf** | `npx skills add dhardenbergh/llm-skills-kit -a windsurf` |
-| **GitHub Copilot** | `npx skills add dhardenbergh/llm-skills-kit -a github-copilot` |
-| **Cline** | `npx skills add dhardenbergh/llm-skills-kit -a cline` |
-| **Amp** | `npx skills add dhardenbergh/llm-skills-kit -a amp` |
-| **Any other** | `npx skills add dhardenbergh/llm-skills-kit -a <agent-name>` |
+| **Any agent** | `npx skills add dhardenbergh/smarter-agents` |
+| **Claude Code** | `claude plugin marketplace add dhardenbergh/smarter-agents && claude plugin install smarter-agents@smarter-agents` |
+| **Codex** | `npx skills add dhardenbergh/smarter-agents -a codex` |
+| **Gemini CLI** | `gemini extensions install https://github.com/dhardenbergh/smarter-agents` |
+| **Cursor** | `npx skills add dhardenbergh/smarter-agents -a cursor` |
+| **Windsurf** | `npx skills add dhardenbergh/smarter-agents -a windsurf` |
+| **GitHub Copilot** | `npx skills add dhardenbergh/smarter-agents -a github-copilot` |
+| **Cline** | `npx skills add dhardenbergh/smarter-agents -a cline` |
+| **Amp** | `npx skills add dhardenbergh/smarter-agents -a amp` |
+| **Any other** | `npx skills add dhardenbergh/smarter-agents -a <agent-name>` |
 
 ### Install specific skills
 
 ```bash
 # Install only the build-time tools (zero ongoing cost)
-npx skills add dhardenbergh/llm-skills-kit -s positive context-trim toolsmith
+npx skills add dhardenbergh/smarter-agents -s positive context-trim toolsmith
 
 # Install only Tier 2 (always-on runtime skills)
-npx skills add dhardenbergh/llm-skills-kit -s forge contract checkpoint
+npx skills add dhardenbergh/smarter-agents -s forge contract checkpoint
 
 # Install a single skill
-npx skills add dhardenbergh/llm-skills-kit -s contrarian
+npx skills add dhardenbergh/smarter-agents -s contrarian
 
 # Install globally (user-level, not just project)
-npx skills add dhardenbergh/llm-skills-kit -g
+npx skills add dhardenbergh/smarter-agents -g
 
 # Install everything to all detected agents, no prompts
-npx skills add dhardenbergh/llm-skills-kit --all -y
+npx skills add dhardenbergh/smarter-agents --all -y
 ```
 
 ### Manual install (Claude Code)
 
 ```bash
-git clone https://github.com/dhardenbergh/llm-skills-kit.git
-cd llm-skills-kit
+git clone https://github.com/dhardenbergh/smarter-agents.git
+cd smarter-agents
 
 mkdir -p ~/.claude/skills
 
@@ -181,7 +181,7 @@ Every skill supports mid-session control. In Claude Code, these are available as
 ## Repository Structure
 
 ```
-llm-skills-kit/
+smarter-agents/
 ├── README.md                          ← You are here
 ├── .claude-plugin/                    Claude Code plugin manifest
 │   ├── plugin.json

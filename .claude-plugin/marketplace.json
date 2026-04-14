@@ -2,7 +2,7 @@
   "name": "llm-skills-kit",
   "description": "Research-backed system prompt skills that reduce token cost and improve output quality for AI coding assistants.",
   "owner": {
-    "name": "Dylan @ Skycatch",
+    "name": "Dylan",
     "url": "https://github.com/dhardenbergh"
   },
   "plugins": [

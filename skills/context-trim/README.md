@@ -1,4 +1,4 @@
-# trim
+# context-trim
 
 Audits and compresses system prompts for token efficiency and model comprehension. Target: 30–50% reduction. Run once, zero runtime cost.
 
@@ -18,12 +18,12 @@ Two commands: `audit` (read-only analysis) then `optimize` (rewrite). The rewrit
 ## Installation
 
 ```
-cp SKILL.md ~/.claude/skills/trim.md
+cp SKILL.md ~/.claude/skills/context-trim.md
 ```
 
 Then reference it in your CLAUDE.md:
 ```
-@skills/trim.md
+@skills/context-trim.md
 ```
 
 ## Commands

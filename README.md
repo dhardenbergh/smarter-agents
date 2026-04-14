@@ -1,50 +1,78 @@
 # LLM Skills Kit
 
-System prompt skills that reduce token cost and improve output quality for AI coding assistants. Each skill is a drop-in markdown file — copy it to your `~/.claude/skills/` directory and reference it in your `CLAUDE.md`.
+System prompt skills that reduce token cost and improve output quality for AI coding assistants. Each skill is a drop-in markdown file that works with any agent that supports the open skills standard.
 
-Nine skills across three tiers. Tier 1 skills run once at build time (zero ongoing cost). Tier 2 skills run every session (~808 tokens, cached at 90% discount after the first turn). Tier 3 skills activate only when relevant.
+Nine skills across three tiers. Tier 1 skills run once at build time (zero ongoing cost). Tier 2 skills run every session (~935 tokens, cached at 90% discount after the first turn). Tier 3 skills activate only when relevant.
 
 **Combined always-on cost:** ~$0.003/session after caching. **Prevents:** $2.45–$12.75 in wasted output per session. **ROI:** 800–4,000×.
 
 ---
 
-## Quick Start
+## Install
+
+Pick your agent. One command. Done.
+
+| Agent | Install |
+|-------|---------|
+| **Any agent** | `npx skills add dhardenbergh/llm-skills-kit` |
+| **Claude Code** | `claude plugin marketplace add dhardenbergh/llm-skills-kit && claude plugin install llm-skills-kit@llm-skills-kit` |
+| **Codex** | `npx skills add dhardenbergh/llm-skills-kit -a codex` |
+| **Gemini CLI** | `gemini extensions install https://github.com/dhardenbergh/llm-skills-kit` |
+| **Cursor** | `npx skills add dhardenbergh/llm-skills-kit -a cursor` |
+| **Windsurf** | `npx skills add dhardenbergh/llm-skills-kit -a windsurf` |
+| **GitHub Copilot** | `npx skills add dhardenbergh/llm-skills-kit -a github-copilot` |
+| **Cline** | `npx skills add dhardenbergh/llm-skills-kit -a cline` |
+| **Amp** | `npx skills add dhardenbergh/llm-skills-kit -a amp` |
+| **Any other** | `npx skills add dhardenbergh/llm-skills-kit -a <agent-name>` |
+
+### Install specific skills
 
 ```bash
-# Clone the repository
-git clone https://github.com/dylan-skycatch/llm-skills-kit.git
+# Install only the build-time tools (zero ongoing cost)
+npx skills add dhardenbergh/llm-skills-kit -s positive context-trim toolsmith
+
+# Install only Tier 2 (always-on runtime skills)
+npx skills add dhardenbergh/llm-skills-kit -s forge contract checkpoint
+
+# Install a single skill
+npx skills add dhardenbergh/llm-skills-kit -s contrarian
+
+# Install globally (user-level, not just project)
+npx skills add dhardenbergh/llm-skills-kit -g
+
+# Install everything to all detected agents, no prompts
+npx skills add dhardenbergh/llm-skills-kit --all -y
+```
+
+### Manual install (Claude Code)
+
+```bash
+git clone https://github.com/dhardenbergh/llm-skills-kit.git
 cd llm-skills-kit
 
-# Create your skills directory
 mkdir -p ~/.claude/skills
 
-# Install Tier 1 (build-time, zero runtime cost)
-cp skills/tier1-foundation/positive/SKILL.md ~/.claude/skills/positive.md
-cp skills/tier1-foundation/trim/SKILL.md ~/.claude/skills/trim.md
-cp skills/tier1-foundation/toolsmith/SKILL.md ~/.claude/skills/toolsmith.md
+# Tier 1 — build-time, zero runtime cost
+cp skills/positive/SKILL.md ~/.claude/skills/positive.md
+cp skills/context-trim/SKILL.md ~/.claude/skills/context-trim.md
+cp skills/toolsmith/SKILL.md ~/.claude/skills/toolsmith.md
 
-# Install Tier 2 (always-on, ~808 tokens)
-cp skills/tier2-runtime/forge/SKILL.md ~/.claude/skills/forge.md
-cp skills/tier2-runtime/contract/SKILL.md ~/.claude/skills/contract.md
-cp skills/tier2-runtime/checkpoint/SKILL.md ~/.claude/skills/checkpoint.md
+# Tier 2 — always-on, ~935 tokens
+cp skills/forge/SKILL.md ~/.claude/skills/forge.md
+cp skills/contract/SKILL.md ~/.claude/skills/contract.md
+cp skills/checkpoint/SKILL.md ~/.claude/skills/checkpoint.md
 
-# Install Tier 3 (opt-in, load when needed)
-cp skills/tier3-conditional/contrarian/SKILL.md ~/.claude/skills/contrarian.md
-cp skills/tier3-conditional/anchor-point/SKILL.md ~/.claude/skills/anchor-point.md
-cp skills/tier3-conditional/grounding/SKILL.md ~/.claude/skills/grounding.md
+# Tier 3 — opt-in, load when needed
+cp skills/contrarian/SKILL.md ~/.claude/skills/contrarian.md
+cp skills/anchor-point/SKILL.md ~/.claude/skills/anchor-point.md
+cp skills/grounding/SKILL.md ~/.claude/skills/grounding.md
 ```
 
-Then reference them in your `CLAUDE.md`:
+See [docs/installation.md](docs/installation.md) for the full guide including per-agent paths and configuration.
 
-```markdown
-@skills/positive.md
-@skills/trim.md
-@skills/forge.md
-@skills/contract.md
-@skills/checkpoint.md
-```
+### Platform Support
 
-See [docs/installation.md](docs/installation.md) for the full guide.
+`npx skills add` automatically installs to the correct directory for [36+ agents](https://github.com/webrix-ai/add-skills#supported-agents) including Claude Code, Cursor, Windsurf, Codex, GitHub Copilot, Gemini CLI, Cline, Amp, Roo Code, Goose, and more.
 
 ---
 
@@ -56,9 +84,9 @@ Run once, zero runtime cost. These transform your existing configuration files.
 
 | Skill | What It Does | Token Cost |
 |-------|-------------|------------|
-| [**positive**](skills/tier1-foundation/positive/) | Rewrites negative constraints → positive directives. "Never X" becomes "Always Y". [10%+ compliance improvement.](https://arxiv.org/abs/2109.07830) | 0 (one-time) |
-| [**trim**](skills/tier1-foundation/trim/) | Audits and compresses system prompts. Restructures into KERNEL format, resolves contradictions, sets cache boundaries. Target: 30–50% reduction. | 0 (one-time) |
-| [**toolsmith**](skills/tier1-foundation/toolsmith/) | Optimizes MCP tool schemas using SHARP format. Fixes vague descriptions, flags overlaps, identifies lazy-load candidates. | 0 (one-time) |
+| [**positive**](skills/positive/) | Rewrites negative constraints → positive directives. "Never X" becomes "Always Y". [10%+ compliance improvement.](https://arxiv.org/abs/2109.07830) | 0 (one-time) |
+| [**context-trim**](skills/context-trim/) | Audits and compresses system prompts. Restructures into KERNEL format, resolves contradictions, sets cache boundaries. Target: 30–50% reduction. | 0 (one-time) |
+| [**toolsmith**](skills/toolsmith/) | Optimizes MCP tool schemas using SHARP format. Fixes vague descriptions, flags overlaps, identifies lazy-load candidates. | 0 (one-time) |
 
 ### Tier 2 — Runtime (Always-On)
 
@@ -66,9 +94,9 @@ Lightweight behavioral rules. Active every session, dormant when irrelevant.
 
 | Skill | What It Does | Token Cost |
 |-------|-------------|------------|
-| [**forge**](skills/tier2-runtime/forge/) | Quality constitution — silent gate on code, analysis, and architecture. Checks against domain-specific standards before responding. | ~461 tokens |
-| [**contract**](skills/tier2-runtime/contract/) | States objective/constraints/completion criteria before executing multi-step tasks. Verifies output against contract before responding. | ~220 tokens |
-| [**checkpoint**](skills/tier2-runtime/checkpoint/) | Agentic validation gates. Validates after each tool call, checks for loops every 3 actions, re-reads original objective before completing. | ~254 tokens |
+| [**forge**](skills/forge/) | Quality constitution — silent gate on code, analysis, and architecture. Checks against domain-specific standards before responding. | ~461 tokens |
+| [**contract**](skills/contract/) | States objective/constraints/completion criteria before executing multi-step tasks. Verifies output against contract before responding. | ~220 tokens |
+| [**checkpoint**](skills/checkpoint/) | Agentic validation gates. Validates after each tool call, checks for loops every 3 actions, re-reads original objective before completing. | ~254 tokens |
 
 **Combined Tier 2:** ~935 tokens → ~94 tokens/turn after caching
 
@@ -78,9 +106,9 @@ Load when the workflow calls for it. Each addresses a specific structural LLM fa
 
 | Skill | What It Does | Token Cost |
 |-------|-------------|------------|
-| [**contrarian**](skills/tier3-conditional/contrarian/) | Anti-sycophancy gate. Evaluates claims on merit, holds corrections under pushback, bans empty affirmation. [Models sycophantize 58% of the time.](https://c3.unu.edu/blog/how-sycophancy-shapes-the-reliability-of-large-language-models) | ~786 tokens |
-| [**anchor-point**](skills/tier3-conditional/anchor-point/) | Multi-turn state management. Forces periodic re-anchoring every 5 turns to combat the [39% performance drop](https://arxiv.org/abs/2505.06120) in multi-turn conversations. | ~651 tokens |
-| [**grounding**](skills/tier3-conditional/grounding/) | Confidence calibration. Tags claims as VERIFIED, ESTABLISHED, UNCERTAIN, or UNKNOWN. [LLM confidence correlates with accuracy at R²=0.01.](https://www.lesswrong.com/posts/unaLT4A6hSTCLNGod/a-black-box-procedure-for-llm-confidence-in-critical) | ~834 tokens |
+| [**contrarian**](skills/contrarian/) | Anti-sycophancy gate. Evaluates claims on merit, holds corrections under pushback, bans empty affirmation. [Models sycophantize 58% of the time.](https://c3.unu.edu/blog/how-sycophancy-shapes-the-reliability-of-large-language-models) | ~786 tokens |
+| [**anchor-point**](skills/anchor-point/) | Multi-turn state management. Forces periodic re-anchoring every 5 turns to combat the [39% performance drop](https://arxiv.org/abs/2505.06120) in multi-turn conversations. | ~651 tokens |
+| [**grounding**](skills/grounding/) | Confidence calibration. Tags claims as VERIFIED, ESTABLISHED, UNCERTAIN, or UNKNOWN. [LLM confidence correlates with accuracy at R²=0.01.](https://www.lesswrong.com/posts/unaLT4A6hSTCLNGod/a-black-box-procedure-for-llm-confidence-in-critical) | ~834 tokens |
 
 ---
 
@@ -88,7 +116,7 @@ Load when the workflow calls for it. Each addresses a specific structural LLM fa
 
 LLMs have structural limitations that persist regardless of model scale:
 
-- **Negation failures** — Autoregressive models activate concepts they're told to avoid. [Larger models perform *worse* on negated queries.](https://arxiv.org/abs/2306.08189)
+- **Negation failures** — Autoregressive models activate concepts they're told to avoid. [Larger models perform worse on negated queries.](https://arxiv.org/abs/2306.08189)
 - **Sycophancy** — RLHF training rewards agreement. [58% sycophancy rate across frontier models.](https://c3.unu.edu/blog/how-sycophancy-shapes-the-reliability-of-large-language-models)
 - **Multi-turn degradation** — [39% average performance drop](https://arxiv.org/abs/2505.06120) from single-turn to multi-turn, across all model families.
 - **Calibration gap** — Model confidence is [essentially uncorrelated with accuracy](https://www.lesswrong.com/posts/unaLT4A6hSTCLNGod/a-black-box-procedure-for-llm-confidence-in-critical) on hard topics (R²=0.01).
@@ -120,8 +148,8 @@ Skills are static text that benefits from [prompt caching](https://docs.anthropi
 
 | Persona | Recommended Skills | Monthly Token Impact |
 |---------|-------------------|---------------------|
-| **Every developer** | positive, trim | Net negative (reduces tokens) |
-| **Quota-conscious user** | positive, trim, toolsmith | Saves 30–50% of system prompt tokens |
+| **Every developer** | positive, context-trim | Net negative (reduces tokens) |
+| **Quota-conscious user** | positive, context-trim, toolsmith | Saves 30–50% of system prompt tokens |
 | **Quality-focused developer** | Tier 1 + forge, contract, checkpoint | +935 tokens → prevents $2.45+/session in waste |
 | **Solo decision-maker** | All tiers + contrarian, grounding | +2,271 additional tokens → catches errors before production |
 | **Agentic workflow builder** | Tier 1 + Tier 2 + checkpoint, anchor-point | +905 additional tokens → prevents cascading failures |
@@ -132,16 +160,15 @@ See [docs/cost-benefit-analysis.md](docs/cost-benefit-analysis.md) for detailed 
 
 ## Slash Commands
 
-Every skill supports mid-session control:
+Every skill supports mid-session control. In Claude Code, these are available as `/commands`:
 
 | Command | Effect |
 |---------|--------|
-| `/positive:rewrite` | Run the positive reframing tool on a file |
-| `/positive:rewrite CLAUDE.md` | Rewrite a specific file |
-| `/trim:audit` | Analyze a system prompt (read-only) |
-| `/trim:optimize` | Rewrite using KERNEL structure |
-| `/toolsmith:audit` | Analyze loaded MCP tool schemas |
-| `/toolsmith:optimize` | Rewrite tool descriptions using SHARP format |
+| `/positive-rewrite` | Run the positive reframing tool on a file |
+| `/trim-audit` | Analyze a system prompt (read-only) |
+| `/trim-optimize` | Rewrite using KERNEL structure |
+| `/toolsmith-audit` | Analyze loaded MCP tool schemas |
+| `/toolsmith-optimize` | Rewrite tool descriptions using SHARP format |
 | `/forge:off` / `/forge:on` | Toggle quality gate |
 | `/contract:off` / `/contract:always` | Toggle output contracts |
 | `/checkpoint:off` | Disable agentic validation |
@@ -156,37 +183,30 @@ Every skill supports mid-session control:
 ```
 llm-skills-kit/
 ├── README.md                          ← You are here
-├── skills/
-│   ├── tier1-foundation/
-│   │   ├── positive/                  Build-time: rewrite negatives → positives
-│   │   │   ├── SKILL.md
-│   │   │   └── README.md
-│   │   ├── trim/                      Build-time: compress system prompts
-│   │   │   ├── SKILL.md
-│   │   │   └── README.md
-│   │   └── toolsmith/                 Build-time: optimize MCP tool schemas
-│   │       ├── SKILL.md
-│   │       └── README.md
-│   ├── tier2-runtime/
-│   │   ├── forge/                     Always-on: quality constitution
-│   │   │   ├── SKILL.md
-│   │   │   └── README.md
-│   │   ├── contract/                  Always-on: output specifications
-│   │   │   ├── SKILL.md
-│   │   │   └── README.md
-│   │   └── checkpoint/                Always-on: agentic validation gates
-│   │       ├── SKILL.md
-│   │       └── README.md
-│   └── tier3-conditional/
-│       ├── contrarian/                Opt-in: anti-sycophancy
-│       │   ├── SKILL.md
-│       │   └── README.md
-│       ├── anchor-point/              Opt-in: multi-turn state management
-│       │   ├── SKILL.md
-│       │   └── README.md
-│       └── grounding/                 Opt-in: confidence calibration
-│           ├── SKILL.md
-│           └── README.md
+├── .claude-plugin/                    Claude Code plugin manifest
+│   ├── plugin.json
+│   └── marketplace.json
+├── AGENTS.md                          Codex auto-discovery
+├── GEMINI.md                          Gemini CLI context
+├── gemini-extension.json              Gemini CLI extension manifest
+├── commands/                          Claude Code slash commands
+│   ├── positive-rewrite.toml
+│   ├── trim-audit.toml
+│   ├── trim-optimize.toml
+│   ├── toolsmith-audit.toml
+│   └── toolsmith-optimize.toml
+├── skills/                            All 9 skills (npx skills add source)
+│   ├── positive/
+│   │   ├── SKILL.md                   The skill file
+│   │   └── README.md                  Documentation
+│   ├── context-trim/
+│   ├── toolsmith/
+│   ├── forge/
+│   ├── contract/
+│   ├── checkpoint/
+│   ├── contrarian/
+│   ├── anchor-point/
+│   └── grounding/
 ├── docs/
 │   ├── installation.md                Full installation guide
 │   ├── cost-benefit-analysis.md       Token economics and ROI per skill
@@ -204,7 +224,7 @@ Not all prompt engineering survives. We categorize skills by durability:
 
 | Category | What Defines It | Skills |
 |----------|----------------|--------|
-| **Structurally persistent** | Architectural limitations that don't scale away | positive, trim, contrarian, anchor-point, grounding, forge |
+| **Structurally persistent** | Architectural limitations that don't scale away | positive, context-trim, contrarian, anchor-point, grounding, forge |
 | **Evolving** | Still useful but the mechanism changes | toolsmith, checkpoint |
 | **Being absorbed** | Frontier models internalize this | _(External CoT, task routing, verbosity control — not in this kit)_ |
 
@@ -227,6 +247,7 @@ Skills should:
 - Specify clear activation/dormancy conditions
 - Include concrete before/after examples
 - Target a structurally persistent LLM limitation
+- Have YAML frontmatter with `name` and `description` fields
 
 ---
 

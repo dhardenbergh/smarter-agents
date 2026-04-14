@@ -56,7 +56,7 @@ These run once to optimize files you already have. Zero ongoing cost.
 
 Negation failures are a [structural limitation of autoregressive models](https://arxiv.org/abs/2406.02965) that doesn't scale away. This is free. There is no argument against doing it.
 
-#### trim
+#### context-trim
 
 | Metric | Value |
 |--------|-------|
@@ -169,7 +169,7 @@ Run once. Zero runtime cost. Net savings on every subsequent session.
 | Skill | Action | Runtime Cost |
 |-------|--------|-------------|
 | **positive** | Rewrites negative instructions → positive | $0.00 |
-| **trim** | Restructures and compresses system prompt | $0.00 (net savings) |
+| **context-trim** | Restructures and compresses system prompt | $0.00 (net savings) |
 | **toolsmith** | Optimizes MCP tool schemas | $0.00 (net savings) |
 
 ### Always-On Layer (Developers)
@@ -228,7 +228,7 @@ Some will. Multi-turn degradation persists at [39% and doesn't scale away](https
 | | Everyday (Pro $20) | Working Developer (Max 5x $100) | Power User / Agentic (Max 20x $200) | API / Production |
 |---|---|---|---|---|
 | **positive** | Yes | Yes | Yes | Yes |
-| **trim** | Yes | Yes | Yes | Yes |
+| **context-trim** | Yes | Yes | Yes | Yes |
 | **toolsmith** | If using MCP | Yes | Yes | Yes |
 | **forge** | Skip | Yes (code domain) | Yes (all domains) | Yes |
 | **contract** | Skip | For complex tasks | Yes | Yes |
@@ -237,4 +237,4 @@ Some will. Multi-turn degradation persists at [39% and doesn't scale away](https
 | **anchor-point** | Skip | For long sessions | Yes | For conversational apps |
 | **grounding** | Skip | For research tasks | For research tasks | For user-facing factual apps |
 
-**The pattern:** Build-time tools for everyone. Runtime skills scale with plan tier. Agentic skills only for agentic workflows. Most developers need three skills (positive + trim + forge) and will see measurable improvement at negligible cost.
+**The pattern:** Build-time tools for everyone. Runtime skills scale with plan tier. Agentic skills only for agentic workflows. Most developers need three skills (positive + context-trim + forge) and will see measurable improvement at negligible cost.

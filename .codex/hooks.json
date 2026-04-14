@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "echo 'LLM Skills Kit loaded. Available commands: /positive:rewrite, /trim:audit, /trim:optimize, /toolsmith:audit, /toolsmith:optimize. Runtime skills active: forge (quality gate), contract (output specs), checkpoint (validation). Use /forge:off, /contract:off, /checkpoint:off to disable. Tier 3 skills (contrarian, anchor-point, grounding) are opt-in.'"
+      }
+    ]
+  }
+}

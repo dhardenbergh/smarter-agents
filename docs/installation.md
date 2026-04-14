@@ -30,19 +30,19 @@ Skills are plain text files that reference themselves in your AI assistant's sys
 mkdir -p ~/.claude/skills
 
 # Copy a specific skill
-cp skills/tier1-foundation/positive/SKILL.md ~/.claude/skills/positive.md
-cp skills/tier1-foundation/trim/SKILL.md ~/.claude/skills/trim.md
-cp skills/tier1-foundation/toolsmith/SKILL.md ~/.claude/skills/toolsmith.md
+cp skills/positive/SKILL.md ~/.claude/skills/positive.md
+cp skills/context-trim/SKILL.md ~/.claude/skills/context-trim.md
+cp skills/toolsmith/SKILL.md ~/.claude/skills/toolsmith.md
 
 # Tier 2 skills
-cp skills/tier2-runtime/forge/SKILL.md ~/.claude/skills/forge.md
-cp skills/tier2-runtime/contract/SKILL.md ~/.claude/skills/contract.md
-cp skills/tier2-runtime/checkpoint/SKILL.md ~/.claude/skills/checkpoint.md
+cp skills/forge/SKILL.md ~/.claude/skills/forge.md
+cp skills/contract/SKILL.md ~/.claude/skills/contract.md
+cp skills/checkpoint/SKILL.md ~/.claude/skills/checkpoint.md
 
 # Tier 3 skills
-cp skills/tier3-conditional/contrarian/SKILL.md ~/.claude/skills/contrarian.md
-cp skills/tier3-conditional/anchor-point/SKILL.md ~/.claude/skills/anchor-point.md
-cp skills/tier3-conditional/grounding/SKILL.md ~/.claude/skills/grounding.md
+cp skills/contrarian/SKILL.md ~/.claude/skills/contrarian.md
+cp skills/anchor-point/SKILL.md ~/.claude/skills/anchor-point.md
+cp skills/grounding/SKILL.md ~/.claude/skills/grounding.md
 ```
 
 ### Step 2: Reference the skill in your CLAUDE.md
@@ -51,7 +51,7 @@ Open `~/.claude/CLAUDE.md` (create it if it doesn't exist) and add a reference t
 
 ```markdown
 @skills/positive.md
-@skills/trim.md
+@skills/context-trim.md
 @skills/forge.md
 ```
 
@@ -100,15 +100,15 @@ Don't install everything at once. Start with the build-time tools, verify the im
 These run once and cost nothing at runtime. Install and run before adding any runtime skills.
 
 ```bash
-cp skills/tier1-foundation/positive/SKILL.md ~/.claude/skills/positive.md
-cp skills/tier1-foundation/trim/SKILL.md ~/.claude/skills/trim.md
-cp skills/tier1-foundation/toolsmith/SKILL.md ~/.claude/skills/toolsmith.md
+cp skills/positive/SKILL.md ~/.claude/skills/positive.md
+cp skills/context-trim/SKILL.md ~/.claude/skills/context-trim.md
+cp skills/toolsmith/SKILL.md ~/.claude/skills/toolsmith.md
 ```
 
 Add to CLAUDE.md:
 ```
 @skills/positive.md
-@skills/trim.md
+@skills/context-trim.md
 @skills/toolsmith.md
 ```
 
@@ -129,9 +129,9 @@ After running these, **remove the skill references from CLAUDE.md**. The build-t
 These load every session. Combined overhead: ~500–700 tokens, cached after the first turn.
 
 ```bash
-cp skills/tier2-runtime/forge/SKILL.md ~/.claude/skills/forge.md
-cp skills/tier2-runtime/contract/SKILL.md ~/.claude/skills/contract.md
-cp skills/tier2-runtime/checkpoint/SKILL.md ~/.claude/skills/checkpoint.md
+cp skills/forge/SKILL.md ~/.claude/skills/forge.md
+cp skills/contract/SKILL.md ~/.claude/skills/contract.md
+cp skills/checkpoint/SKILL.md ~/.claude/skills/checkpoint.md
 ```
 
 Add to CLAUDE.md (after removing build-time tool references):
@@ -158,9 +158,9 @@ Add these only when your workflow matches the use case:
 
 ```bash
 # Install only the ones you need
-cp skills/tier3-conditional/contrarian/SKILL.md ~/.claude/skills/contrarian.md
-cp skills/tier3-conditional/anchor-point/SKILL.md ~/.claude/skills/anchor-point.md
-cp skills/tier3-conditional/grounding/SKILL.md ~/.claude/skills/grounding.md
+cp skills/contrarian/SKILL.md ~/.claude/skills/contrarian.md
+cp skills/anchor-point/SKILL.md ~/.claude/skills/anchor-point.md
+cp skills/grounding/SKILL.md ~/.claude/skills/grounding.md
 ```
 
 ---

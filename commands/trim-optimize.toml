@@ -1,0 +1,2 @@
+description = "Compress and restructure a system prompt using KERNEL format"
+prompt = "Run the trim:optimize skill on {{args}} (or auto-detect CLAUDE.md / .cursorrules). Back up original, then rewrite using KERNEL structure: Identity → Critical → Static → (cache boundary) → Dynamic → Guardrails. Apply all 9 optimization rules. Report before/after token counts."

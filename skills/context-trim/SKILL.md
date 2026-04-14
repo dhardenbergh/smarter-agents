@@ -1,6 +1,9 @@
 ---
-name: trim
-description: Audits and compresses system prompts for token efficiency and model comprehension. Restructures into KERNEL order, strips redundancy, resolves contradictions. Target: 30–50% reduction. Run once, zero runtime cost.
+name: context-trim
+description: >-
+  Audits and compresses system prompts for token efficiency and model
+  comprehension. Restructures into KERNEL order, strips redundancy, resolves
+  contradictions. Target 30-50 percent reduction. Run once, zero runtime cost.
 ---
 
 Compress system prompts. Cut tokens. Preserve behavior. Fix contradictions. Front-load what matters.
@@ -22,7 +25,7 @@ Sources: [Anthropic prompt caching docs](https://docs.anthropic.com/en/docs/buil
 
 Analyzes the target file without modifying it. Reports:
 
-- **Token estimate** — character count ÷ 4 (1 token ≈ 4 chars)
+- **Token estimate** — character count / 4 (1 token = approx 4 chars)
 - **Contradictions** — rules that directly conflict (flagged with line numbers)
 - **Position analysis** — what's in the first 50 tokens vs. what should be
 - **Cache boundary** — where static content ends and dynamic content begins
@@ -39,12 +42,12 @@ Analyzes the target file without modifying it. Reports:
 ```
 trim:audit — CLAUDE.md
 ──────────────────────
-Tokens (est):    4,820  ← target: <2,000
-First 50 tokens: "You are a helpful assistant that..."  ← WASTED (generic)
+Tokens (est):    4,820  <- target: <2,000
+First 50 tokens: "You are a helpful assistant that..."  <- WASTED (generic)
 Cache boundary:  None detected (static/dynamic mixed)
 Contradictions:  2 found
-  ↳ L12 "be concise" conflicts with L47 "always provide full examples"
-  ↳ L31 "never use bullet points" conflicts with L89 "use lists for steps"
+  L12 "be concise" conflicts with L47 "always provide full examples"
+  L31 "never use bullet points" conflicts with L89 "use lists for steps"
 Redundancy:      6 rules duplicated or restated
 Top savings:
   - Remove 3 redundant role-declaration sentences  (~120 tokens)
@@ -70,7 +73,7 @@ Rewrite in this order:
 [KERNEL]
 1. Identity     — 1 sentence: what this agent is and its primary directive
 2. Critical     — must-follow behaviors (ranked by consequence of violation)
-3. Static       — style, tone, format rules that never change  ← CACHE BOUNDARY
+3. Static       — style, tone, format rules that never change  <- CACHE BOUNDARY
 ─────────────────────────────────────────────────────────────────────────────
 4. Dynamic      — project-specific context, current task, variable instructions
 5. Guardrails  — behavioral boundaries (recency bias benefit; placed last)
@@ -89,8 +92,8 @@ The opening tokens set the behavioral frame. Lead with the agent's identity and 
 Remove: `please`, `make sure to`, `it's important that`, `you should`, `always remember`, `as an AI`, `I want you to`, `feel free to`, `certainly`, `of course`.
 
 **3. Drop articles from instructions** (Caveman-style for directives)
-`"Always include a summary at the end"` → `"Include summary at end"`
-`"Use the correct format for all responses"` → `"Use correct format"`
+`"Always include a summary at the end"` -> `"Include summary at end"`
+`"Use the correct format for all responses"` -> `"Use correct format"`
 
 **4. Deduplicate**
 Find rules stated more than once. Keep the clearest version. Delete the rest.
@@ -108,7 +111,7 @@ Project name, current sprint, active task, user preferences — move to after ca
 Constraint rules belong at the end. Recency bias means they're more likely to be followed when closest to the generation point. (After `/positive:rewrite`, these become positive directives — still place at end.)
 
 **9. Compress redundant rationale**
-`"Use TypeScript types because types improve readability, catch bugs early, and make refactoring safer"` → `"Use TypeScript types (readability + safety)"`
+`"Use TypeScript types because types improve readability, catch bugs early, and make refactoring safer"` -> `"Use TypeScript types (readability + safety)"`
 
 ## Backup and Reporting
 

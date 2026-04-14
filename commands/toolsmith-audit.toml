@@ -1,0 +1,2 @@
+description = "Audit MCP tool schemas for quality issues and token overhead"
+prompt = "Run the toolsmith:audit skill. Analyze all loaded MCP tool schemas (or {{args}} if a config file is specified). Report: total token footprint, vague descriptions, missing trigger conditions, overlapping tools, missing return shapes, lazy-load candidates. Read-only."

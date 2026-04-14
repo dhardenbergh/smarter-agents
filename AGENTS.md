@@ -1,0 +1,9 @@
+@./skills/positive/SKILL.md
+@./skills/context-trim/SKILL.md
+@./skills/toolsmith/SKILL.md
+@./skills/forge/SKILL.md
+@./skills/contract/SKILL.md
+@./skills/checkpoint/SKILL.md
+@./skills/contrarian/SKILL.md
+@./skills/anchor-point/SKILL.md
+@./skills/grounding/SKILL.md

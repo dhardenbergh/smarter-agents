@@ -11,7 +11,7 @@
 | Skill | Structure | Activation | Positive Framing | Citations | Examples | Consistency | LLM Clarity | Overall |
 |-------|-----------|------------|------------------|-----------|----------|-------------|-------------|---------|
 | **positive** | ✅ PASS | ✅ PASS | ✅ PASS | ⚠️ WARN | ✅ PASS | ✅ PASS | ✅ PASS | ✅ **PASS** |
-| **trim** | ✅ PASS | ⚠️ WARN | ⚠️ WARN | ⚠️ WARN | ✅ PASS | ✅ PASS | ✅ PASS | ⚠️ **WARN** |
+| **context-trim** | ✅ PASS | ⚠️ WARN | ⚠️ WARN | ⚠️ WARN | ✅ PASS | ✅ PASS | ✅ PASS | ⚠️ **WARN** |
 | **toolsmith** | ✅ PASS | ✅ PASS | ✅ PASS | ⚠️ WARN | ✅ PASS | ✅ PASS | ✅ PASS | ⚠️ **WARN** |
 | **forge** | ⚠️ WARN | ⚠️ WARN | ✅ PASS | ⚠️ WARN | ✅ PASS | ✅ PASS | ⚠️ WARN | ⚠️ **WARN** |
 | **contract** | ✅ PASS | ✅ PASS | ✅ PASS | ⚠️ WARN | ✅ PASS | ✅ PASS | ✅ PASS | ⚠️ **WARN** |
@@ -32,7 +32,7 @@
 
 ### 1. `positive` — Tier 1 Foundation
 
-**File:** `skills/tier1-foundation/positive/SKILL.md`  
+**File:** `skills/positive/SKILL.md`  
 **Size:** 4,685 chars / ~1,171 tokens (est.)  
 **Slash commands:** `/positive:rewrite`
 
@@ -76,9 +76,9 @@
 
 ---
 
-### 2. `trim` — Tier 1 Foundation
+### 2. `context-trim` — Tier 1 Foundation
 
-**File:** `skills/tier1-foundation/trim/SKILL.md`  
+**File:** `skills/context-trim/SKILL.md`  
 **Size:** 5,958 chars / ~1,489 tokens (est.)  
 **Slash commands:** `/trim:audit`, `/trim:optimize`
 
@@ -94,7 +94,7 @@
 
 #### Positive Framing (Boundaries) — ⚠️ WARN
 - Boundaries section: all positive framing ✅
-- **Issue:** KERNEL Structure section labels position 5 as `"Constraints — what not to do"`. This is describing the structure of the *user's* system prompt, not giving instructions to the model — so it's not a violation. However, it creates a conceptual tension with the `positive` skill: the trim skill recommends placing a "what not to do" section last, while the positive skill converts all "what not to do" into positive directives. The interaction is acknowledged inline (`After /positive:rewrite, these become positive directives — still place at end`) ✅ — the cross-reference is there, but a reader might still be confused about the ordering. This is acceptable but worth a note.
+- **Issue:** KERNEL Structure section labels position 5 as `"Constraints — what not to do"`. This is describing the structure of the *user's* system prompt, not giving instructions to the model — so it's not a violation. However, it creates a conceptual tension with the `positive` skill: the context-trim skill recommends placing a "what not to do" section last, while the positive skill converts all "what not to do" into positive directives. The interaction is acknowledged inline (`After /positive:rewrite, these become positive directives — still place at end`) ✅ — the cross-reference is there, but a reader might still be confused about the ordering. This is acceptable but worth a note.
 
 #### Token Count Accuracy — ✅ PASS
 - No specific token count claimed for the file itself. The output format examples show realistic numbers.
@@ -123,7 +123,7 @@
 
 ### 3. `toolsmith` — Tier 1 Foundation
 
-**File:** `skills/tier1-foundation/toolsmith/SKILL.md`  
+**File:** `skills/toolsmith/SKILL.md`  
 **Size:** 6,125 chars / ~1,531 tokens (est.)  
 **Slash commands:** `/toolsmith:audit`, `/toolsmith:optimize`
 
@@ -168,7 +168,7 @@
 
 ### 4. `forge` — Tier 2 Runtime
 
-**File:** `skills/tier2-runtime/forge/SKILL.md`  
+**File:** `skills/forge/SKILL.md`  
 **Size:** 1,336 chars / ~334 tokens (est.)  
 **Slash commands:** `/forge:off` (in Boundaries, no dedicated section)
 
@@ -213,7 +213,7 @@
 
 ### 5. `contract` — Tier 2 Runtime
 
-**File:** `skills/tier2-runtime/contract/SKILL.md`  
+**File:** `skills/contract/SKILL.md`  
 **Size:** 880 chars / ~220 tokens (est.)  
 **Slash commands:** `/contract:off`, `/contract:always`
 
@@ -263,7 +263,7 @@
 
 ### 6. `checkpoint` — Tier 2 Runtime
 
-**File:** `skills/tier2-runtime/checkpoint/SKILL.md`  
+**File:** `skills/checkpoint/SKILL.md`  
 **Size:** 1,017 chars / ~254 tokens (est.)  
 **Slash commands:** `/checkpoint:off`
 
@@ -307,7 +307,7 @@
 
 ### 7. `contrarian` — Tier 3 Conditional
 
-**File:** `skills/tier3-conditional/contrarian/SKILL.md`  
+**File:** `skills/contrarian/SKILL.md`  
 **Size:** 3,145 chars / ~786 tokens (est.)  
 **Slash commands:** `/contrarian:off`
 
@@ -354,7 +354,7 @@
 
 ### 8. `anchor-point` — Tier 3 Conditional
 
-**File:** `skills/tier3-conditional/anchor-point/SKILL.md`  
+**File:** `skills/anchor-point/SKILL.md`  
 **Size:** 2,606 chars / ~651 tokens (est.)  
 **Slash commands:** `/anchor:now`, `/anchor:off`
 
@@ -401,7 +401,7 @@
 
 ### 9. `grounding` — Tier 3 Conditional
 
-**File:** `skills/tier3-conditional/grounding/SKILL.md`  
+**File:** `skills/grounding/SKILL.md`  
 **Size:** 3,343 chars / ~835 tokens (est.)  
 **Slash commands:** `/grounding:off`
 
@@ -461,9 +461,9 @@ These are three different behaviors sharing one section name. If a user loads al
 
 `forge` has `/forge:off` but no `/forge:on`. All other skills with an off command also have an on or now command (e.g., `/anchor:now`). Since `forge` is always-on by default, a user who disables it and wants to re-enable it within a session has no command to do so. Add `/forge:on` for symmetry.
 
-### Issue 3: `trim` KERNEL Structure Labels Position 5 as "Constraints — what not to do"
+### Issue 3: `context-trim` KERNEL Structure Labels Position 5 as "Constraints — what not to do"
 
-The `positive` skill converts all "what not to do" into positive directives. The `trim` skill then places them under a label that explicitly says "what not to do." After running both skills on a system prompt, the `trim` output would place positive directives under a section labeled with a negative description. The inline note handles this, but the KERNEL diagram itself (`5. Constraints — what not to do`) should either be updated to "5. Guardrails" or similar, or the note should be in the diagram itself.
+The `positive` skill converts all "what not to do" into positive directives. The `context-trim` skill then places them under a label that explicitly says "what not to do." After running both skills on a system prompt, the `context-trim` output would place positive directives under a section labeled with a negative description. The inline note handles this, but the KERNEL diagram itself (`5. Constraints — what not to do`) should either be updated to "5. Guardrails" or similar, or the note should be in the diagram itself.
 
 ### Issue 4: `forge` Citation Mismatch
 
@@ -489,7 +489,7 @@ The tianpan.co blog post linked in `grounding` has a 2026 date. Whether this is 
 
 4. **`forge`**: Add a `## Slash Commands` section with a table. Add a `## When active` section that defines what "conversational/simple" means with 2–3 examples. Add `/forge:on`.
 
-5. **`trim`**: Update the "Lost in the Middle" citation note. The paper supports positional importance in general but does not support the "first 50 tokens → 80% of behavioral change" specific claim. Either find the source for this claim or rephrase to "first tokens set the behavioral frame" without the percentage.
+5. **`context-trim`**: Update the "Lost in the Middle" citation note. The paper supports positional importance in general but does not support the "first 50 tokens → 80% of behavioral change" specific claim. Either find the source for this claim or rephrase to "first tokens set the behavioral frame" without the percentage.
 
 6. **`anchor-point`**: Define what counts as a "turn" (user message only, or user+assistant pair). This affects when the every-5-turns anchor fires.
 
@@ -503,7 +503,7 @@ The tianpan.co blog post linked in `grounding` has a 2026 date. Whether this is 
 
 10. **All tier-3 skills**: Rename `## Auto-Clarity` sections to distinct names to eliminate the terminological overlap across `contrarian`, `anchor-point`, and `grounding`.
 
-11. **`trim`**: Update the KERNEL diagram's position-5 label from "Constraints — what not to do" to "Guardrails" or "Constraints" (without the "what not to do" qualifier) to reduce friction when used alongside `positive`.
+11. **`context-trim`**: Update the KERNEL diagram's position-5 label from "Constraints — what not to do" to "Guardrails" or "Constraints" (without the "what not to do" qualifier) to reduce friction when used alongside `positive`.
 
 ---
 
@@ -518,7 +518,7 @@ The tianpan.co blog post linked in `grounding` has a 2026 date. Whether this is 
 | contrarian | 3,145 | ~786 | Small |
 | grounding | 3,343 | ~835 | Small |
 | positive | 4,685 | ~1,171 | Medium |
-| trim | 5,958 | ~1,489 | Medium |
+| context-trim | 5,958 | ~1,489 | Medium |
 | toolsmith | 6,125 | ~1,531 | Medium |
 | **Total (all 9)** | **28,095** | **~7,021** | — |
 

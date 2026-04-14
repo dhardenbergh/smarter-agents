@@ -62,7 +62,7 @@ Emotional prompting still works ([+8% on Instruction Induction](https://arxiv.or
 
 Additionally, this is a one-time rewrite — it costs nothing after execution and can't become obsolete because it modifies files you own, not the model's behavior.
 
-### trim — Survival: High (but evolving)
+### context-trim — Survival: High (but evolving)
 
 Context compression isn't dying — it's becoming *more* important for different reasons. 1M token windows [cost $5–15 per request at frontier pricing](https://www.tldl.io/resources/llm-api-pricing-2026). Anthropic's Claude 4 system prompt is [~23,000 tokens](https://simonwillison.net/2025/May/25/claude-4-system-prompt/). "Context rot" degrades accuracy [30%+ in mid-window positions](https://atlan.com/know/llm-context-window-limitations/) even with 1M windows — bigger context doesn't mean better context.
 
@@ -111,7 +111,7 @@ Ranked by expected durability and impact:
 | 5 | **forge** | Domain-specific quality | Task-specific needs can't be pre-trained |
 | 6 | **toolsmith** | ACI quality | Every new tool needs good documentation |
 | 7 | **grounding** | ECE 0.63–0.81 | RLHF incentive problem |
-| 8 | **trim** | Cost + context rot | Economics don't scale away |
+| 8 | **context-trim** | Cost + context rot | Economics don't scale away |
 | 9 | **positive** | Negation failures | Autoregressive architecture limitation |
 
 The top four target problems that are **getting worse or staying flat** despite massive capability gains. The middle three target problems that are **structurally persistent**. The bottom two target problems where models are improving but haven't fully solved.

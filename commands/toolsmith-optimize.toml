@@ -1,0 +1,2 @@
+description = "Rewrite MCP tool descriptions using SHARP format for better model comprehension"
+prompt = "Run the toolsmith:optimize skill on {{args}} (or all loaded MCP tools). Rewrite each description using SHARP format: Situation, How, Arguments, Returns, Pitfall. Add type constraints to parameters. Flag lazy-load candidates. Output optimized config."

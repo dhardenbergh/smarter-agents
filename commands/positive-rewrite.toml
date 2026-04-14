@@ -1,0 +1,2 @@
+description = "Rewrite negative constraints in a system prompt into positive equivalents"
+prompt = "Run the positive skill. Scan {{args}} (or auto-detect CLAUDE.md / .cursorrules) for negative constraints (don't, never, avoid, no, refrain from) and rewrite each as a positive directive. Back up original first. Show before/after diff summary."

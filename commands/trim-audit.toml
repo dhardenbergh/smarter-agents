@@ -1,0 +1,2 @@
+description = "Audit a system prompt for token bloat, contradictions, and cache optimization opportunities"
+prompt = "Run the trim:audit skill on {{args}} (or auto-detect CLAUDE.md / .cursorrules). Report: token estimate, contradictions with line numbers, position analysis, cache boundary status, redundancy. Read-only — no changes."

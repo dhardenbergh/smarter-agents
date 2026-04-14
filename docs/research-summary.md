@@ -29,7 +29,7 @@ This kit targets the second category. The skills exist because these failures ar
 
 ---
 
-## 2. Context Bloat and Position Effects (trim)
+## 2. Context Bloat and Position Effects (context-trim)
 
 **The problem:** Most CLAUDE.md files work against themselves through four compounding failure modes:
 
@@ -140,7 +140,7 @@ This kit targets the second category. The skills exist because these failures ar
 | Failure Mode | Root Cause | Scales Away? | Skill |
 |--------------|-----------|--------------|-------|
 | Negation failures | Autoregressive token prediction mechanics | No (inverse scaling) | positive |
-| Context degradation | Position bias in transformer attention | No (bigger context ≠ better context) | trim |
+| Context degradation | Position bias in transformer attention | No (bigger context ≠ better context) | context-trim |
 | Tool misselection | Static schema design; no routing signal | No (every new tool needs docs) | toolsmith |
 | Output omissions | No domain-specific quality signal | No (training can't anticipate all domains) | forge |
 | Misaligned output | Natural language underspecification | No (ambiguity is user-side) | contract |
